@@ -1,0 +1,11 @@
+D:\Cs_projects\1CVk\CoreApi\CoreApi\bin\Release\netstandard2.0\CoreApi.deps.json
+D:\Cs_projects\1CVk\CoreApi\CoreApi\bin\Release\netstandard2.0\CoreApi.dll
+D:\Cs_projects\1CVk\CoreApi\CoreApi\bin\Release\netstandard2.0\CoreApi.pdb
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.Properties.Resources.resources
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.csproj.GenerateResource.Cache
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.csproj.CoreCompileInputs.cache
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.AssemblyInfoInputs.cache
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.AssemblyInfo.cs
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.dll
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.pdb
+D:\Cs_projects\1CVk\CoreApi\CoreApi\obj\Release\netstandard2.0\CoreApi.csprojResolveAssemblyReference.cache
