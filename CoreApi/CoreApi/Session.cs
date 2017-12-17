@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization.Json;
-using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace CoreApi
 {
@@ -21,5 +19,13 @@ namespace CoreApi
             JsonConvert.DeserializeObject<Error>(answer).Init();
             return JsonConvert.DeserializeObject<GroupCustomers>(answer);
         }
+        public Album GetAllPhotos()
+        {
+            var req = new Request(Request.comGetPhotos, token);
+            var answer = Connector.GetJsonAnswer(req);
+            JsonConvert.DeserializeObject<Error>(answer).Init();
+            return JsonConvert.DeserializeObject<Album>(answer);
+        }
+        
     }
 }

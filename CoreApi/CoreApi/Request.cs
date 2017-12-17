@@ -7,6 +7,7 @@ namespace CoreApi
     {
         private const string comAuth = "auth";
         public const string comGetCustomers = "getCustomer";
+        public const string comGetPhotos = "getPhotos";
 
         private Dictionary<string, string> parametrs;
         private string comand;
@@ -40,7 +41,7 @@ namespace CoreApi
                 sb.Append(item.Key + "=" + item.Value + "&");
             }
             if (!(token is null))
-                sb.Append("token=" + token.token);
+                sb.Append(token.ToParametr());
             return sb.ToString();
         }
 
