@@ -1,0 +1,33 @@
+﻿<Window x:Class="DesktopClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopClient"
+        mc:Ignorable="d"
+        Title="Окно входа" MinHeight="140" MinWidth="340" Height="126" Width="260">
+    <Grid>
+        <Border BorderThickness="2" Height="110" Width="330" Background="#5FD2B5">
+            <Grid Height="80" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Логин:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBlock Text="Пароль:" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center"/>
+                <TextBox x:Name="txtLogin" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" KeyUp="txtLogin_KeyDown"/>
+                <PasswordBox x:Name="txtPass" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center"/>
+                <Button Content="Войти" Grid.Row="4" Grid.Column="1" Width="70" HorizontalAlignment="Right" Click="Button_Login"/>
+                <TextBlock x:Name="txtMess"  Grid.Column="1" Margin="0,0,75,0" Grid.Row="4" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -49,6 +49,7 @@ namespace CoreApi
             var request = new Request(comAuth);
             request.SetParametr("login", login);
             request.SetParametr("password", password);
+            var t = request.GetString();
             return request;
         }
     }

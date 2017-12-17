@@ -17,6 +17,8 @@ namespace CoreApi
                     throw new TokenExeption();
                 case Errors.BadParams:
                     throw new ParamsExeption();
+                default:
+                    return;
             }
         }
     }
