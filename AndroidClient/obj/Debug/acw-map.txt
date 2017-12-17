@@ -1,8 +1,0 @@
-AndroidClient.MainActivity, AndroidClient;md53bd050cde05b5e0d49aba1e6a9c3383d.MainActivity
-AndroidClient.MainActivity, AndroidClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md53bd050cde05b5e0d49aba1e6a9c3383d.MainActivity
-AndroidClient.MainActivity;md53bd050cde05b5e0d49aba1e6a9c3383d.MainActivity
-androidclient.MainActivity;md53bd050cde05b5e0d49aba1e6a9c3383d.MainActivity
-AndroidClient.Adapters.CustomerAdapter, AndroidClient;md52e25f3c33812a3c1e09147d71067b919.CustomerAdapter
-AndroidClient.Adapters.CustomerAdapter, AndroidClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md52e25f3c33812a3c1e09147d71067b919.CustomerAdapter
-AndroidClient.Adapters.CustomerAdapter;md52e25f3c33812a3c1e09147d71067b919.CustomerAdapter
-androidclient.adapters.CustomerAdapter;md52e25f3c33812a3c1e09147d71067b919.CustomerAdapter

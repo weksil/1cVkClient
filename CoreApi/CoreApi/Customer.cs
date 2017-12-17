@@ -18,10 +18,6 @@ namespace CoreApi
                 var p = birth_day.Split('.');
                 switch (p.Length)
                 {
-                    case 1:
-                        if (p[0].Length == 0) break;
-                        t[0] = p[0];
-                        break;
                     case 2:
                         t[0] = p[0];
                         t[1] = p[1];
