@@ -1,0 +1,71 @@
+﻿<Window x:Class="DesktopClient.WorkWondow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopClient"
+        mc:Ignorable="d"
+        Title="WorkWondow" MinHeight="300" MinWidth="700" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
+    <TabControl>
+        <TabItem Header="Заказы">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="120"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+                    <ItemsControl x:Name="icGoods" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1" BorderBrush="Black" Background="LightGray" Margin="2" MouseUp="ClickOnProduct">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding id}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding title}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding price}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Grid x:Name="grInfo" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" MinWidth="300"/>
+                        <ColumnDefinition Width="1*" MinWidth="300"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1">
+                        <StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="ID: "/>
+                                    <TextBlock Text="{Binding id}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="Название: "/>
+                                    <TextBlock Text="{Binding title}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="Цена: "/>
+                                    <TextBlock Text="{Binding price}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                    </StackPanel>
+                    <Image Grid.Column="0" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Клиенты"></TabItem>
+        <TabItem Header="Товары"></TabItem>
+    </TabControl>
+</Window>

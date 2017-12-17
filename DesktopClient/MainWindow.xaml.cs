@@ -24,6 +24,7 @@ namespace DesktopClient
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Button_Login(object sender, RoutedEventArgs e)

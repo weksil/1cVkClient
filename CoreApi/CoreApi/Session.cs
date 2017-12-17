@@ -4,7 +4,7 @@ namespace CoreApi
 {
     public class Session
     {
-        private AuthToken token;
+        public AuthToken token;
 
         public Session(string login, string password)
         {
@@ -12,6 +12,7 @@ namespace CoreApi
             JsonConvert.DeserializeObject<Error>(answer).Init();
             token = JsonConvert.DeserializeObject<AuthToken>(answer);
         }
+
         public T GetAllItems<T>(string comm)
         {
             var req = new Request(comm, token);
