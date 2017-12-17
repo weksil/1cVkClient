@@ -8,6 +8,7 @@ namespace CoreApi
         private const string comAuth = "auth";
         public const string comGetCustomers = "getCustomer";
         public const string comGetPhotos = "getPhotos";
+        public const string comGetGoods = "getGoods";
 
         private Dictionary<string, string> parametrs;
         private string comand;

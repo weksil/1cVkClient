@@ -4,7 +4,7 @@ namespace CoreApi
 {
     public class Session
     {
-        public AuthToken token;
+        private AuthToken token;
 
         public Session(string login, string password)
         {
@@ -12,19 +12,17 @@ namespace CoreApi
             JsonConvert.DeserializeObject<Error>(answer).Init();
             token = JsonConvert.DeserializeObject<AuthToken>(answer);
         }
-        public GroupCustomers GetAllCustomers()
+        public T GetAllItems<T>(string comm)
         {
-            var req = new Request(Request.comGetCustomers, token);
-            var answer = Connector.GetJsonAnswer(req);
-            JsonConvert.DeserializeObject<Error>(answer).Init();
-            return JsonConvert.DeserializeObject<GroupCustomers>(answer);
+            var req = new Request(comm, token);
+            return Parse<T>(req);
         }
-        public Album GetAllPhotos()
+
+        private static T Parse<T>(Request source)
         {
-            var req = new Request(Request.comGetPhotos, token);
-            var answer = Connector.GetJsonAnswer(req);
+            var answer = Connector.GetJsonAnswer(source);
             JsonConvert.DeserializeObject<Error>(answer).Init();
-            return JsonConvert.DeserializeObject<Album>(answer);
+            return JsonConvert.DeserializeObject<T>(answer);
         }
         
     }
