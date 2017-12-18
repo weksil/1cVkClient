@@ -22,7 +22,58 @@
     </Window.Resources>
     <TabControl Background="#FFD073">
         <TabItem Header="Заказы">
-           
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="120" MaxWidth="400"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+                    <StackPanel>
+                        <Button  Height="30" Content="Обновить" Margin="2" Click="Update_Orders"/>
+                        <ItemsControl x:Name="icOrders" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnOrder">
+                                        <TextBlock Margin="1" Text="{Binding GetString}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid x:Name="grOrderInfo" Grid.Column="1" MinWidth="500">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="5">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="ID: "/>
+                                <TextBlock Text="{Binding id}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Имя: "/>
+                                <TextBlock Text="{Binding first_name}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Фамилия: "/>
+                                <TextBlock Text="{Binding last_name}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="День рожденья: "/>
+                                <TextBlock Text="{Binding Birth_day}"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Пол: "/>
+                                <TextBlock Text="{Binding sex}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <Image Grid.Column="1" Source="{Binding photo}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                </Grid>
+            </Grid>
         </TabItem>
         <TabItem Header="Клиенты">
             <Grid >

@@ -22,9 +22,10 @@ namespace DesktopClient
     public partial class WorkWondow : Window
     {
         private Session curentSession;
-        private AlbumPhoto goodsAlbum;
+        //private AlbumPhoto goodsAlbum;
         private Products products;
         private GroupCustomers customers;
+        private OrdersCollection orders;
 
         public WorkWondow(Session session)
         {
@@ -34,11 +35,11 @@ namespace DesktopClient
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            goodsAlbum = new AlbumPhoto( curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token);
+            cgSelectPhoto.ItemsSource = (new AlbumPhoto( curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token)).Photos;
+            cgSelectPhoto.SelectedIndex = 0;
             Update_Goods();
             Update_Customers();
-            cgSelectPhoto.ItemsSource = goodsAlbum.Photos;
-            cgSelectPhoto.SelectedIndex = 0;
+            Update_Orders();
         }
 
         private void ClickOnProduct(object sender, MouseButtonEventArgs e)
@@ -48,6 +49,10 @@ namespace DesktopClient
         private void ClickOnCustomer(object sender, MouseButtonEventArgs e)
         {
             grCustomerInfo.DataContext = (sender as Border).DataContext;
+        }
+        private void ClickOnOrder(object sender, MouseButtonEventArgs e)
+        {
+            grOrderInfo.DataContext = (sender as Border).DataContext;
         }
 
         private void CreateItem_SelectPhoto(object sender, RoutedEventArgs e)
@@ -96,6 +101,12 @@ namespace DesktopClient
             customers = curentSession.GetAllItems<GroupCustomers>(Request.comGetCustomers);
             icCustomers.ItemsSource = customers.customers;
             grCustomerInfo.DataContext = null;
+        }
+        private void Update_Orders(object sender = null, RoutedEventArgs e = null)
+        {
+            orders = curentSession.GetAllItems<OrdersCollection>(Request.comGetOrders);
+            icOrders.ItemsSource = orders.orders;
+            grOrderInfo.DataContext = null;
         }
     }
 }
