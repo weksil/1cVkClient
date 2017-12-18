@@ -13,12 +13,71 @@
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <Style x:Key="BorderStyle">
+            <Setter Property="Border.BorderThickness" Value="1" />
+            <Setter Property="Border.BorderBrush" Value="Black" />
+            <Setter Property="Border.Background" Value="#ccc" />
+            <Setter Property="Border.Margin" Value="2" />
+        </Style>
     </Window.Resources>
-    <TabControl>
+    <TabControl Background="#FFD073">
         <TabItem Header="Заказы">
            
         </TabItem>
-        <TabItem Header="Клиенты"></TabItem>
+        <TabItem Header="Клиенты">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="120" MaxWidth="400"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+                    <StackPanel>
+                        <Button  Height="30" Content="Обновить" Margin="2" Click="Update_Customers"/>
+                        <ItemsControl x:Name="icCustomers" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnCustomer">
+                                        <TextBlock Margin="1" Text="{Binding FullName}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid x:Name="grCustomerInfo" Grid.Column="1" MinWidth="500">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="5">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="ID: "/>
+                                <TextBlock Text="{Binding id}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Имя: "/>
+                                <TextBlock Text="{Binding first_name}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Фамилия: "/>
+                                <TextBlock Text="{Binding last_name}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="День рожденья: "/>
+                                <TextBlock Text="{Binding Birth_day}"/>
+                                
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Пол: "/>
+                                <TextBlock Text="{Binding sex}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <Image Grid.Column="1" Source="{Binding photo}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                </Grid>
+            </Grid>
+        </TabItem>
         <TabItem Header="Товары">
             <Grid>
                 <Grid x:Name="GoodsInfoGrid" >
@@ -32,7 +91,7 @@
                             <ItemsControl x:Name="icGoods" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                        <Border BorderThickness="2" BorderBrush="Black" Background="#ddd" Margin="2" MouseUp="ClickOnProduct">
+                                        <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnProduct">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="0.5*"/>
@@ -50,7 +109,7 @@
                         </ItemsControl>
                         </StackPanel>
                     </ScrollViewer>
-                    <Grid x:Name="grInfo" Grid.Column="1" MinWidth="500">
+                    <Grid x:Name="grGoodsInfo" Grid.Column="1" MinWidth="500">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="1*"/>

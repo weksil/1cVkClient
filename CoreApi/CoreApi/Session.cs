@@ -35,10 +35,11 @@ namespace CoreApi
             var answ = Connector.GetJsonAnswer(req);
             Parse<Goods_id>(answ);
         }
-        public class Goods_id
-        {
-            public long good_id { get; set; }
-        }
+
+    }
+    public class Goods_id
+    {
+        public long good_id { get; set; }
     }
 
 

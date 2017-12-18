@@ -24,6 +24,7 @@ namespace DesktopClient
         private Session curentSession;
         private AlbumPhoto goodsAlbum;
         private Products products;
+        private GroupCustomers customers;
 
         public WorkWondow(Session session)
         {
@@ -34,15 +35,19 @@ namespace DesktopClient
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             goodsAlbum = new AlbumPhoto( curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token);
-            products =  new Products( curentSession.GetAllItems<GoodsCollection>(Request.comGetGoods),curentSession.token);
-            icGoods.ItemsSource = products.Goods;
+            Update_Goods();
+            Update_Customers();
             cgSelectPhoto.ItemsSource = goodsAlbum.Photos;
             cgSelectPhoto.SelectedIndex = 0;
         }
 
         private void ClickOnProduct(object sender, MouseButtonEventArgs e)
         {
-            grInfo.DataContext = (sender as Border).DataContext;
+            grGoodsInfo.DataContext = (sender as Border).DataContext;
+        }
+        private void ClickOnCustomer(object sender, MouseButtonEventArgs e)
+        {
+            grCustomerInfo.DataContext = (sender as Border).DataContext;
         }
 
         private void CreateItem_SelectPhoto(object sender, RoutedEventArgs e)
@@ -80,10 +85,17 @@ namespace DesktopClient
             GoodsCreateGrid.Visibility = Visibility.Visible;
             GoodsInfoGrid.Visibility = Visibility.Hidden;
         }
-        private void Update_Goods(object sender, RoutedEventArgs e)
+        private void Update_Goods(object sender = null, RoutedEventArgs e = null)
         {
             products = new Products(curentSession.GetAllItems<GoodsCollection>(Request.comGetGoods), curentSession.token);
             icGoods.ItemsSource = products.Goods;
+            grGoodsInfo.DataContext = null;
+        }
+        private void Update_Customers(object sender = null, RoutedEventArgs e = null)
+        {
+            customers = curentSession.GetAllItems<GroupCustomers>(Request.comGetCustomers);
+            icCustomers.ItemsSource = customers.customers;
+            grCustomerInfo.DataContext = null;
         }
     }
 }

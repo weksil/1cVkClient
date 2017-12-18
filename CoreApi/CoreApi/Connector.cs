@@ -6,8 +6,8 @@ namespace CoreApi
 {
     public class Connector
     {
-        private const string Url = "http://82.146.48.26:80/api/";
-        private const string UrlPictures = "http://82.146.48.26:80/";
+        private const string Url = "http://mereng.xyz/api/";
+        private const string UrlPictures = "http://mereng.xyz/";
 
         public static string GetJsonAnswer(Request request)
         {

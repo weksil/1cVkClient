@@ -6,9 +6,10 @@ namespace CoreApi
     {
         public int id { get; set; }
         public string link { get; set; }
+        public string title { get; set; }
         public override string ToString()
         {
-            return id.ToString();
+            return title;
         }
     }
 
