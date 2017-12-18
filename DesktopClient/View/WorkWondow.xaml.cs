@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,16 +28,18 @@ namespace DesktopClient
         private Products products;
         private GroupCustomers customers;
         private OrdersCollection orders;
+        private OrderModel curCreatedOrder;
 
         public WorkWondow(Session session)
         {
             InitializeComponent();
             curentSession = session;
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cgSelectPhoto.ItemsSource = (new AlbumPhoto( curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token)).Photos;
+            cgSelectPhoto.ItemsSource = (new AlbumPhoto(curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token)).Photos;
             cgSelectPhoto.SelectedIndex = 0;
             Update_Goods();
             Update_Customers();
@@ -68,6 +72,7 @@ namespace DesktopClient
                 var idPhoto = (cgSelectPhoto.SelectedItem as PhotoUri).Id;
                 curentSession.CreateGoods(cgTitle.Text, price, idPhoto);
                 cgError.Text = "Создано!";
+                Update_Goods();
             }
             catch (Exception)
             {
@@ -107,6 +112,54 @@ namespace DesktopClient
             orders = curentSession.GetAllItems<OrdersCollection>(Request.comGetOrders);
             icOrders.ItemsSource = orders.orders;
             grOrderInfo.DataContext = null;
+        }
+
+        private void OrderTable_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            Product tmp;
+            //foreach (var item in curCreatedOrder.goods)
+            //{
+            //    tmp = products.Goods.Where(x => x.id == item.id).FirstOrDefault()?.CurrentProduct;
+            //    if (tmp is null)
+            //    {
+            //        continue;
+            //    }
+            //    item.title = tmp.title;
+            //    item.price = tmp.price;
+            //}
+            //try
+            //{
+            //    dgCreateOrder.Dispatcher.BeginInvoke(new Action(() => dgCreateOrder.Items.Refresh()), System.Windows.Threading.DispatcherPriority.Background);
+            //}
+            //catch (Exception){}
+            
+            txtCreateOrderTotal.Text = (curCreatedOrder.total).ToString();
+        }
+
+        private void AllOrders_View(object sender, RoutedEventArgs e)
+        {
+            grOrderInfo.Visibility = Visibility.Visible;
+            grOrderCreate.Visibility = Visibility.Hidden;
+        }
+        private void CreateOrder_View(object sender, RoutedEventArgs e)
+        {
+            grOrderInfo.Visibility = Visibility.Hidden;
+            curCreatedOrder = new OrderModel();
+            curCreatedOrder.goods.Add(new Product());
+            grOrderCreate.DataContext = curCreatedOrder;
+            grOrderCreate.Visibility = Visibility.Visible;
+
+        }
+        private void RemoveProduct(object sender, RoutedEventArgs e)
+        {
+            if (grGoodsInfo.DataContext is null) return;
+            curentSession.RemoveGoods((grGoodsInfo.DataContext as GoodsModel).id);
+            Update_Goods();
+        }
+        private void AddPositionInOrder(object sender, RoutedEventArgs e)
+        {
+            curCreatedOrder.goods.Add(new Product());
+            dgCreateOrder.Items.Refresh();
         }
     }
 }

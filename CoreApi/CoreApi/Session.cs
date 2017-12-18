@@ -24,14 +24,21 @@ namespace CoreApi
             JsonConvert.DeserializeObject<Error>(source).Init();
             return JsonConvert.DeserializeObject<T>(source);
         }
-        public void CreateGoods(string title,double price, int photo)
+        public void CreateGoods(string title, double price, int photo)
         {
             if (title.Length == 0) throw new ParamsExeption();
             if (price <= 0) throw new ParamsExeption();
             var req = new Request(Request.comCreateGoods, token);
             req.SetParametr("title", title);
-            req.SetParametr("price", price.ToString().Replace(",","."));
+            req.SetParametr("price", price.ToString().Replace(",", "."));
             req.SetParametr("photo", photo);
+            var answ = Connector.GetJsonAnswer(req);
+            Parse<Goods_id>(answ);
+        }
+        public void RemoveGoods( int id)
+        {
+            var req = new Request(Request.comRemoveGoods, token);
+            req.SetParametr("id", id);
             var answ = Connector.GetJsonAnswer(req);
             Parse<Goods_id>(answ);
         }

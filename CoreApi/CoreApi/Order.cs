@@ -5,6 +5,7 @@ namespace CoreApi
     public class Order
     {
         public int id { get; set; }
+        public List<Product> goods { get; set; }
         public Customer customer { get; set; }
         public OrderStatus status { get; set; }
         public double total { get; set; }

@@ -11,9 +11,11 @@ namespace CoreApi
         public const string comGetGoods = "getGoods";
         public const string comCreateGoods = "cGood"; 
         public const string comGetOrders = "getOrders";
+        public const string comRemoveGoods = "deleteGood";
 
         private Dictionary<string, string> parametrs;
         private string comand;
+        private string content;
         private AuthToken token;
 
         public Request(string comand, AuthToken token = null)
@@ -33,6 +35,15 @@ namespace CoreApi
             {
                 parametrs.Add(parametr, value.ToString());
             }
+        }
+        public void SetContent(string value)
+        {
+            content = value;
+        }
+
+        public string GetContent()
+        {
+            return content ;
         }
 
         public string GetString()
@@ -56,5 +67,7 @@ namespace CoreApi
             var t = request.GetString();
             return request;
         }
+
+
     }
 }

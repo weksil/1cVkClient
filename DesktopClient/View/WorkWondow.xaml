@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="WorkWondow" MinHeight="300" MinWidth="700" Loaded="Window_Loaded">
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14" />
+        <Style x:Key="TextStyle">
+            <Setter Property="TextBlock.FontSize" Value="14" />
         </Style>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14" />
@@ -34,7 +34,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnOrder">
-                                        <TextBlock Margin="1" Text="{Binding GetString}"/>
+                                        <TextBlock Style="{StaticResource TextStyle}" Margin="1" Text="{Binding GetString}"/>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -42,36 +42,52 @@
                     </StackPanel>
                 </ScrollViewer>
                 <Grid x:Name="grOrderInfo" Grid.Column="1" MinWidth="500">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="5">
+                    <StackPanel Margin="5">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="ID: "/>
-                                <TextBlock Text="{Binding id}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="ID: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding id}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Имя: "/>
-                                <TextBlock Text="{Binding first_name}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Статус: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding status}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Фамилия: "/>
-                                <TextBlock Text="{Binding last_name}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Стоимось: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding total}"/>
                             </StackPanel>
+                            <DataGrid ItemsSource="{Binding Path=goods}" AutoGenerateColumns="False" HorizontalAlignment ="left" Margin="0,15,0,0" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="id" Binding="{Binding Path=id}" />
+                                    <DataGridTextColumn Header="Название" Binding="{Binding Path=title}" />
+                                    <DataGridTextColumn Header="Количество" Binding="{Binding Path=quantity}" />
+                                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Path=TotalPrice}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Width="100" Height="30" Content="Создать заказ" Click="CreateOrder_View" HorizontalAlignment="Left" Margin="0,15,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="grOrderCreate" Grid.Column="1" MinWidth="500" Visibility="Hidden">
+                    <StackPanel Margin="5">
+                        <Button Width="100" Height="30" Content="Назад" Click="AllOrders_View" HorizontalAlignment="Left" Margin="15,0,0,15"/>
+                        <StackPanel>
+                            <Button Content="Добавить позицию" Click="AddPositionInOrder" Height="30" Width="70" HorizontalAlignment="Left"/>
+                            <DataGrid x:Name="dgCreateOrder" ItemsSource="{Binding Path=goods,Mode=TwoWay}" AutoGenerateColumns="False" HorizontalAlignment ="left" Margin="0,10,0,0" CellEditEnding="OrderTable_CellEditEnding" 
+                                      CanUserAddRows="False" CanUserDeleteRows="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="id" Binding="{Binding Path=id, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Название" Binding="{Binding Path=title}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Количество" Binding="{Binding Path=quantity, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="День рожденья: "/>
-                                <TextBlock Text="{Binding Birth_day}"/>
-
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Пол: "/>
-                                <TextBlock Text="{Binding sex}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Стоимось: "/>
+                                <TextBlock x:Name="txtCreateOrderTotal" Style="{StaticResource TextStyle}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                    <Image Grid.Column="1" Source="{Binding photo}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
                 </Grid>
             </Grid>
         </TabItem>
@@ -88,7 +104,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnCustomer">
-                                        <TextBlock Margin="1" Text="{Binding FullName}"/>
+                                        <TextBlock Style="{StaticResource TextStyle}" Margin="2" Text="{Binding FullName}" />
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -103,25 +119,25 @@
                     <StackPanel Grid.Column="0" Margin="5">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="ID: "/>
-                                <TextBlock Text="{Binding id}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="ID: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding id}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Имя: "/>
-                                <TextBlock Text="{Binding first_name}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Имя: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding first_name}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Фамилия: "/>
-                                <TextBlock Text="{Binding last_name}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Фамилия: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding last_name}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="День рожденья: "/>
-                                <TextBlock Text="{Binding Birth_day}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="День рожденья: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding Birth_day}"/>
                                 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Пол: "/>
-                                <TextBlock Text="{Binding sex}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Пол: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding sex}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -147,13 +163,11 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="0.5*"/>
                                                 <ColumnDefinition Width="2*"/>
-                                                <!--<ColumnDefinition Width="1*"/>-->
-                                            </Grid.ColumnDefinitions>
+                                                </Grid.ColumnDefinitions>
 
-                                            <TextBlock Grid.Column="0" Margin="2,0,0,0" Text="{Binding id}" />
-                                            <TextBlock Grid.Column="1" Text="{Binding title}" />
-                                            <!--<TextBlock Grid.Column="1" Text="{Binding price}" />-->
-                                        </Grid>
+                                            <TextBlock Style="{StaticResource TextStyle}" Grid.Column="0" Margin="2,0,0,0" Text="{Binding id}" />
+                                            <TextBlock Style="{StaticResource TextStyle}" Grid.Column="1" Text="{Binding title}" />
+                                            </Grid>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -168,19 +182,22 @@
                         <StackPanel Grid.Column="1">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="ID: "/>
-                                    <TextBlock Text="{Binding id}"/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="ID: "/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="{Binding id}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="Название: "/>
-                                    <TextBlock Text="{Binding title}"/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="Название: "/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="{Binding title}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="Цена: "/>
-                                    <TextBlock Text="{Binding price}"/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="Цена: "/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="{Binding price}"/>
                                 </StackPanel>
-                                <Button Content ="Создать товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="Create_Goods_View"/>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Button Content ="Создать товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="Create_Goods_View"/>
+                                    <Button Content ="Удалить товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="RemoveProduct"/>
                                 </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                         <Image Grid.Column="0" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
                     </Grid>
@@ -192,14 +209,14 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <Button Width="70" Content ="Назад" HorizontalAlignment="Left" Margin="0,0,0,10" Click="All_Goods_View"/>
-                        <TextBlock Text="Название"/>
+                        <TextBlock Style="{StaticResource TextStyle}" Text="Название"/>
                         <TextBox x:Name="cgTitle" KeyDown="EditInfo"/>
-                        <TextBlock Text="Цена"/>
+                        <TextBlock Style="{StaticResource TextStyle}" Text="Цена"/>
                         <TextBox x:Name="cgPrice" KeyDown="EditInfo"/>
-                        <TextBlock Text="Изображение"/>
+                        <TextBlock Style="{StaticResource TextStyle}" Text="Изображение"/>
                         <ComboBox x:Name="cgSelectPhoto" SelectionChanged="CreateItem_SelectPhoto"/>
                         <Button Content="Создать" Click="CreateProduct" Width="70" Height="30" Margin="0,10,0,0" HorizontalAlignment="Right"/>
-                        <TextBlock x:Name="cgError"/>
+                        <TextBlock Style="{StaticResource TextStyle}" x:Name="cgError"/>
                     </StackPanel>
                     <Image Margin="10" Source="{Binding PuctureUri}" Grid.Column="1" x:Name="cgPhoto"/>
                 </Grid>
