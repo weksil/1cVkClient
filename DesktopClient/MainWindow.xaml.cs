@@ -24,7 +24,8 @@ namespace DesktopClient
         public MainWindow()
         {
             InitializeComponent();
-
+            txtLogin.Text = "test10";
+            txtPass.Password = "123456";
         }
 
         private void Button_Login(object sender, RoutedEventArgs e)

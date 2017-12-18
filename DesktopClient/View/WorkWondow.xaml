@@ -10,42 +10,53 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
     </Window.Resources>
     <TabControl>
         <TabItem Header="Заказы">
+           
+        </TabItem>
+        <TabItem Header="Клиенты"></TabItem>
+        <TabItem Header="Товары">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" MinWidth="120"/>
-                    <ColumnDefinition Width="5*"/>
-                </Grid.ColumnDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
-                    <ItemsControl x:Name="icGoods" >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderThickness="1" BorderBrush="Black" Background="LightGray" Margin="2" MouseUp="ClickOnProduct">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.5*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Text="{Binding id}" />
-                                        <TextBlock Grid.Column="1" Text="{Binding title}" />
-                                        <TextBlock Grid.Column="2" Text="{Binding price}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-                <Grid x:Name="grInfo" Grid.Column="1">
+                <Grid x:Name="GoodsInfoGrid" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" MinWidth="300"/>
-                        <ColumnDefinition Width="1*" MinWidth="300"/>
+                        <ColumnDefinition Width="1*" MinWidth="120" MaxWidth="400"/>
+                        <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
                         <StackPanel>
+                            <Button  Height="30" Content="Обновить" Margin="2" Click="Update_Goods"/>
+                            <ItemsControl x:Name="icGoods" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                        <Border BorderThickness="2" BorderBrush="Black" Background="#ddd" Margin="2" MouseUp="ClickOnProduct">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.5*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                                <!--<ColumnDefinition Width="1*"/>-->
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Margin="2,0,0,0" Text="{Binding id}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding title}" />
+                                            <!--<TextBlock Grid.Column="1" Text="{Binding price}" />-->
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <Grid x:Name="grInfo" Grid.Column="1" MinWidth="500">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel>
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock Text="ID: "/>
                                     <TextBlock Text="{Binding id}"/>
@@ -58,14 +69,31 @@
                                     <TextBlock Text="Цена: "/>
                                     <TextBlock Text="{Binding price}"/>
                                 </StackPanel>
-                            </StackPanel>
-
+                                <Button Content ="Создать товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="Create_Goods_View"/>
+                                </StackPanel>
+                        </StackPanel>
+                        <Image Grid.Column="0" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="GoodsCreateGrid" Margin="10" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Button Width="70" Content ="Назад" HorizontalAlignment="Left" Margin="0,0,0,10" Click="All_Goods_View"/>
+                        <TextBlock Text="Название"/>
+                        <TextBox x:Name="cgTitle" KeyDown="EditInfo"/>
+                        <TextBlock Text="Цена"/>
+                        <TextBox x:Name="cgPrice" KeyDown="EditInfo"/>
+                        <TextBlock Text="Изображение"/>
+                        <ComboBox x:Name="cgSelectPhoto" SelectionChanged="CreateItem_SelectPhoto"/>
+                        <Button Content="Создать" Click="CreateProduct" Width="70" Height="30" Margin="0,10,0,0" HorizontalAlignment="Right"/>
+                        <TextBlock x:Name="cgError"/>
                     </StackPanel>
-                    <Image Grid.Column="0" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                    <Image Margin="10" Source="{Binding PuctureUri}" Grid.Column="1" x:Name="cgPhoto"/>
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Header="Клиенты"></TabItem>
-        <TabItem Header="Товары"></TabItem>
     </TabControl>
 </Window>

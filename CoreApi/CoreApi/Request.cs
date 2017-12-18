@@ -9,6 +9,7 @@ namespace CoreApi
         public const string comGetCustomers = "getCustomer";
         public const string comGetPhotos = "getPhotos";
         public const string comGetGoods = "getGoods";
+        public const string comCreateGoods = "cGood";
 
         private Dictionary<string, string> parametrs;
         private string comand;
@@ -21,15 +22,15 @@ namespace CoreApi
             this.token = token;
         }
 
-        public void SetParametr(string parametr, string value)
+        public void SetParametr(string parametr, object value)
         {
             if (parametrs.ContainsKey(parametr))
             {
-                parametrs[parametr] = value;
+                parametrs[parametr] = value.ToString();
             }
             else
             {
-                parametrs.Add(parametr, value);
+                parametrs.Add(parametr, value.ToString());
             }
         }
 

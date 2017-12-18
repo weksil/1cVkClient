@@ -6,6 +6,10 @@ namespace CoreApi
     {
         public int id { get; set; }
         public string link { get; set; }
+        public override string ToString()
+        {
+            return id.ToString();
+        }
     }
 
     public class Album
