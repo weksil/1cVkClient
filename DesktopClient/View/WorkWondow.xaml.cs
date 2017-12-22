@@ -99,12 +99,14 @@ namespace DesktopClient
         {
             products = new Products(curentSession.GetAllItems<GoodsCollection>(Request.comGetGoods), curentSession.token);
             icGoods.ItemsSource = products.Goods;
+            cbxGoods.ItemsSource = products.Goods;
             grGoodsInfo.DataContext = null;
         }
         private void Update_Customers(object sender = null, RoutedEventArgs e = null)
         {
             customers = curentSession.GetAllItems<GroupCustomers>(Request.comGetCustomers);
             icCustomers.ItemsSource = customers.customers;
+            cbxCustomers.ItemsSource = customers.customers;
             grCustomerInfo.DataContext = null;
         }
         private void Update_Orders(object sender = null, RoutedEventArgs e = null)
@@ -113,29 +115,6 @@ namespace DesktopClient
             icOrders.ItemsSource = orders.orders;
             grOrderInfo.DataContext = null;
         }
-
-        private void OrderTable_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            Product tmp;
-            //foreach (var item in curCreatedOrder.goods)
-            //{
-            //    tmp = products.Goods.Where(x => x.id == item.id).FirstOrDefault()?.CurrentProduct;
-            //    if (tmp is null)
-            //    {
-            //        continue;
-            //    }
-            //    item.title = tmp.title;
-            //    item.price = tmp.price;
-            //}
-            //try
-            //{
-            //    dgCreateOrder.Dispatcher.BeginInvoke(new Action(() => dgCreateOrder.Items.Refresh()), System.Windows.Threading.DispatcherPriority.Background);
-            //}
-            //catch (Exception){}
-            
-            txtCreateOrderTotal.Text = (curCreatedOrder.total).ToString();
-        }
-
         private void AllOrders_View(object sender, RoutedEventArgs e)
         {
             grOrderInfo.Visibility = Visibility.Visible;
@@ -144,8 +123,8 @@ namespace DesktopClient
         private void CreateOrder_View(object sender, RoutedEventArgs e)
         {
             grOrderInfo.Visibility = Visibility.Hidden;
+            txtErrorCreateOrder.Text = "";
             curCreatedOrder = new OrderModel();
-            curCreatedOrder.goods.Add(new Product());
             grOrderCreate.DataContext = curCreatedOrder;
             grOrderCreate.Visibility = Visibility.Visible;
 
@@ -158,8 +137,60 @@ namespace DesktopClient
         }
         private void AddPositionInOrder(object sender, RoutedEventArgs e)
         {
-            curCreatedOrder.goods.Add(new Product());
-            dgCreateOrder.Items.Refresh();
+            try
+            {
+                var quantity = int.Parse(txtGoodsQuantity.Text);
+                var vendor = (cbxGoods.SelectedItem as GoodsModel).vendor_code;
+                var product = products.Goods.Where(x => x.vendor_code == vendor).First().CurrentProduct;
+                if (product.quantity + quantity < 0) quantity = -product.quantity;
+                curCreatedOrder.Add(product, quantity);
+                curCreatedOrder.Fire();
+                dgCreateOrder.Items.Refresh();
+            }
+            catch (Exception)
+            {
+            }
+            
         }
+        private void CreateOrder(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cbxCustomers.SelectedIndex == -1) throw new Exception();
+                if (curCreatedOrder.goods.Count < 0) throw new Exception();
+                var res = curCreatedOrder.CreateJson(cbxCustomers.SelectedItem as Customer);
+                curentSession.CreateOrder(res);
+                Update_Goods();
+                Update_Orders();
+                txtErrorCreateOrder.Text = "Успешно";
+                dgCreateOrder.Items.Refresh();
+            }
+            catch (Exception error)
+            {
+                if (error is CoreApi.StockExeption)
+                {
+                    txtErrorCreateOrder.Text = "Недостаточно золота";
+                }
+                else
+                    txtErrorCreateOrder.Text = "Ошибка при создании";
+            }
+        }
+        //private void Cmb_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    var source = sender as ComboBox;
+        //    CollectionView itemsViewOriginal = (CollectionView)CollectionViewSource.GetDefaultView(source.ItemsSource);
+
+        //    itemsViewOriginal.Filter = ((o) =>
+        //    {
+        //        if (String.IsNullOrEmpty(source.Text)) return true;
+        //        else
+        //        {
+        //            if (o.ToString().Contains(source.Text)) return true;
+        //            else return false;
+        //        }
+        //    });
+
+        //    itemsViewOriginal.Refresh();
+        //}
     }
 }

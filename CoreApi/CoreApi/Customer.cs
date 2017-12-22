@@ -37,9 +37,9 @@ namespace CoreApi
                 return bday;
             } }
         private DateTime bday = new DateTime(1,1,1);
-        public string FullName
+        public override string ToString()
         {
-           get { return last_name + " " + first_name; }
+            return last_name + " " + first_name; ;
         }
     }
 

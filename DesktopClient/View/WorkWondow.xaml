@@ -41,7 +41,7 @@
                         </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
-                <Grid x:Name="grOrderInfo" Grid.Column="1" MinWidth="500">
+                <Grid x:Name="grOrderInfo" Grid.Column="1" MinWidth="500" >
                     <StackPanel Margin="5">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" >
@@ -72,19 +72,31 @@
                     <StackPanel Margin="5">
                         <Button Width="100" Height="30" Content="Назад" Click="AllOrders_View" HorizontalAlignment="Left" Margin="15,0,0,15"/>
                         <StackPanel>
-                            <Button Content="Добавить позицию" Click="AddPositionInOrder" Height="30" Width="70" HorizontalAlignment="Left"/>
-                            <DataGrid x:Name="dgCreateOrder" ItemsSource="{Binding Path=goods,Mode=TwoWay}" AutoGenerateColumns="False" HorizontalAlignment ="left" Margin="0,10,0,0" CellEditEnding="OrderTable_CellEditEnding" 
-                                      CanUserAddRows="False" CanUserDeleteRows="False" >
+                            <TextBlock Text="Клиент" Style="{StaticResource TextStyle}" Width="300" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                            <ComboBox x:Name="cbxCustomers" Width="300" HorizontalAlignment="Left" Margin="0,10,0,10" IsTextSearchEnabled="True" IsEditable="True" StaysOpenOnEdit="True"  />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Товар:" Margin="0,0,10,10"/>
+                                <ComboBox x:Name="cbxGoods" Margin="0,0,10,10" Width="100" IsTextSearchEnabled="True" IsEditable="True" StaysOpenOnEdit="True"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Количество:" Margin="0,0,10,10"/>
+                                <TextBox x:Name="txtGoodsQuantity" Style="{StaticResource TextStyle}" Width="70" Margin="0,0,10,10"/>
+                            </StackPanel>
+                            <Button Content="Изменить" Click="AddPositionInOrder" Height="30" Width="70" HorizontalAlignment="Left"/>
+                            <DataGrid x:Name="dgCreateOrder" ItemsSource="{Binding Path=goods}" AutoGenerateColumns="False" HorizontalAlignment ="left" Margin="0,10,0,0" 
+                                      CanUserResizeColumns="True" CanUserSortColumns="True"  MaxHeight="300">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="id" Binding="{Binding Path=id, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Header="Название" Binding="{Binding Path=title}" IsReadOnly="True"/>
-                                    <DataGridTextColumn Header="Количество" Binding="{Binding Path=quantity, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Артикул"  Binding="{Binding vendor_code}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header="Название" Binding="{Binding title}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header="Количество" Binding="{Binding quantity}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header="Стоимость" Binding="{Binding TotalPrice}" IsReadOnly="True"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Style="{StaticResource TextStyle}" Text="Стоимось: "/>
-                                <TextBlock x:Name="txtCreateOrderTotal" Style="{StaticResource TextStyle}"/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding total}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Button Width="100" Height="30" Content="Создать" Click="CreateOrder" HorizontalAlignment="Left" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="txtErrorCreateOrder" Style="{StaticResource TextStyle}" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -104,7 +116,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnCustomer">
-                                        <TextBlock Style="{StaticResource TextStyle}" Margin="2" Text="{Binding FullName}" />
+                                        <TextBlock Style="{StaticResource TextStyle}" Margin="2" Text="{Binding}"/>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -161,11 +173,11 @@
                                         <Border Style="{StaticResource BorderStyle}" MouseUp="ClickOnProduct">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="0.5*"/>
-                                                <ColumnDefinition Width="2*"/>
-                                                </Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                            <TextBlock Style="{StaticResource TextStyle}" Grid.Column="0" Margin="2,0,0,0" Text="{Binding id}" />
+                                            <TextBlock Style="{StaticResource TextStyle}" Grid.Column="0" Margin="2,0,0,0" Text="{Binding vendor_code}" />
                                             <TextBlock Style="{StaticResource TextStyle}" Grid.Column="1" Text="{Binding title}" />
                                             </Grid>
                                     </Border>
@@ -186,8 +198,16 @@
                                     <TextBlock Style="{StaticResource TextStyle}" Text="{Binding id}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="Артикул: "/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="{Binding vendor_code}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
                                     <TextBlock Style="{StaticResource TextStyle}" Text="Название: "/>
                                     <TextBlock Style="{StaticResource TextStyle}" Text="{Binding title}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="Количество на складе: "/>
+                                    <TextBlock Style="{StaticResource TextStyle}" Text="{Binding stock}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock Style="{StaticResource TextStyle}" Text="Цена: "/>

@@ -9,8 +9,13 @@ namespace CoreApi
         public double price { get; set; }
         public Photo photo { get; set; }
         public string vendor_code { get; set; }
+        public int stock { get; set; }
         public int quantity { get; set; }
         public double TotalPrice { get { return quantity * price; } }
+        public override string ToString()
+        {
+            return vendor_code;
+        }
     }
 
     public class GoodsCollection

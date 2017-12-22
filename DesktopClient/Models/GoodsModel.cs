@@ -3,7 +3,7 @@ using System;
 
 namespace DesktopClient
 {
-    class GoodsModel
+    public class GoodsModel
     {
         public GoodsModel(Product currentProduct)
         {
@@ -23,5 +23,11 @@ namespace DesktopClient
         public double price { get { return CurrentProduct.price; } set { CurrentProduct.price = value; } }
         public int quantity { get { return CurrentProduct.quantity; } set { CurrentProduct.quantity = value; } }
         public double TotalPrice { get { return CurrentProduct.TotalPrice; } }
+        public int stock { get { return CurrentProduct.stock; }  }
+        public string vendor_code { get { return CurrentProduct.vendor_code; } }
+        public override string ToString()
+        {
+            return CurrentProduct.ToString();
+        }
     }
 }

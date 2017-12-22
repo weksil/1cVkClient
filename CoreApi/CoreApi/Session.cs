@@ -42,6 +42,14 @@ namespace CoreApi
             var answ = Connector.GetJsonAnswer(req);
             Parse<Goods_id>(answ);
         }
+        public void CreateOrder(SendOrder order)
+        {
+            var req = new Request(Request.comCreateOrder, token);
+            var json = JsonConvert.SerializeObject(order);
+            req.SetContent(json);
+            var res = Connector.PostJsonAnswer(req);
+            Parse<Error>(res);
+        }
 
     }
     public class Goods_id

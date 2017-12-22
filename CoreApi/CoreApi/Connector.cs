@@ -35,12 +35,12 @@ namespace CoreApi
             return new Uri(UrlPictures + path + "?" + token.ToParametr());
         }
 
-        private static string PostJsonAnswer(Request request)
+        public static string PostJsonAnswer(Request request)
         {
             WebRequest req = WebRequest.Create(Url + request.GetString());
             req.Method = "POST";
             req.Timeout = 1000;
-            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentType = "application/json";
             byte[] sentData = Encoding.UTF8.GetBytes(request.GetContent());
             req.ContentLength = sentData.Length;
             Stream sendStream = req.GetRequestStream();

@@ -17,6 +17,8 @@ namespace CoreApi
                     throw new TokenExeption();
                 case Errors.BadParams:
                     throw new ParamsExeption();
+                case Errors.BadStock:
+                    throw new StockExeption();
                 default:
                     return;
             }
@@ -25,6 +27,7 @@ namespace CoreApi
 
     public enum Errors
     {
+        BadStock = 25632,
         BadAuth = 1,
         BadToken,
         BadParams
@@ -32,5 +35,6 @@ namespace CoreApi
     public class AuthExeption : Exception{ }
     public class TokenExeption : Exception{ }
     public class ParamsExeption : Exception{ }
+    public class StockExeption : Exception{ }
 
 }
