@@ -1,9 +1,10 @@
 ﻿using CoreApi;
 using System;
+using System.ComponentModel;
 
 namespace DesktopClient
 {
-    public class GoodsModel
+    public class GoodsModel: INotifyPropertyChanged
     {
         public GoodsModel(Product currentProduct)
         {
@@ -25,6 +26,14 @@ namespace DesktopClient
         public double TotalPrice { get { return CurrentProduct.TotalPrice; } }
         public int stock { get { return CurrentProduct.stock; }  }
         public string vendor_code { get { return CurrentProduct.vendor_code; } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void Fire()
+        {
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(stock)));
+        }
+        
+
         public override string ToString()
         {
             return CurrentProduct.ToString();

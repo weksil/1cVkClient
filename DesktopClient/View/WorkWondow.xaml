@@ -196,10 +196,10 @@
                     </ScrollViewer>
                     <Grid x:Name="grGoodsInfo" Grid.Column="1" MinWidth="500">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="1">
+                        <StackPanel Grid.Column="0" Margin="10">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock Style="{StaticResource TextStyle}" Text="ID: "/>
@@ -222,12 +222,16 @@
                                     <TextBlock Style="{StaticResource TextStyle}" Text="{Binding price}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" >
-                                    <Button Content ="Создать товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="Create_Goods_View"/>
-                                    <Button Content ="Удалить товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10" Click="RemoveProduct"/>
+                                    <Button Content ="Создать товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="0,10,0,10" Click="Create_Goods_View"/>
+                                    <Button Content ="Удалить товар" Width="100" Height="35"  HorizontalAlignment="Left" Margin="10,10,0,10" Click="RemoveProduct"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Button Content ="Добавить" Width="100" Height="35"  HorizontalAlignment="Left" Margin="0,10,10,0" Click="AddStockGoods"/>
+                                    <TextBox Style="{StaticResource TextStyle}" x:Name="txtNewStock" Width="100"  VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                        <Image Grid.Column="0" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
+                        <Image Grid.Column="1" Source="{Binding ProductUri}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
                     </Grid>
                 </Grid>
                 <Grid x:Name="GoodsCreateGrid" Margin="10" Visibility="Hidden">

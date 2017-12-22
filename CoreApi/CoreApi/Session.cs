@@ -59,6 +59,15 @@ namespace CoreApi
             req.SetParametr("status_id", status.id);
             Parse<Error>(Connector.GetJsonAnswer(req));
         }
+        public void AddStokGoods(Product product, int addStock)
+        {
+            if (addStock < 1) return;
+            product.stock += addStock;
+            var req = new Request(Request.comUpdateGoods, token);
+            req.SetParametr("good_id", product.id);
+            req.SetParametr("stock", product.stock);
+            Parse<Error>(Connector.GetJsonAnswer(req));
+        }
     }
     public class Goods_id
     {

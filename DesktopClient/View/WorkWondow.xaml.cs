@@ -172,7 +172,7 @@ namespace DesktopClient
             }
             catch (Exception error)
             {
-                if (error is CoreApi.StockExeption)
+                if (error is StockExeption)
                 {
                     txtErrorCreateOrder.Text = "Недостаточно золота";
                 }
@@ -193,6 +193,21 @@ namespace DesktopClient
             catch (Exception)
             {
                 MessageBox.Show("Неправильный статус");
+            }
+            Update_Orders();
+        }
+        private void AddStockGoods(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var product = grGoodsInfo.DataContext as GoodsModel;
+                if (product is null) return;
+                var add = int.Parse(txtNewStock.Text);
+                curentSession.AddStokGoods(product.CurrentProduct, add);
+                product.Fire() ;
+            }
+            catch (Exception)
+            {
             }
             Update_Orders();
         }
