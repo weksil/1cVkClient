@@ -50,7 +50,15 @@ namespace CoreApi
             var res = Connector.PostJsonAnswer(req);
             Parse<Error>(res);
         }
-
+        public void UpdateOrder(Order order, Status status)
+        {
+            if (order.status.id == status.id) return;
+            order.status = status;
+            var req = new Request(Request.comUpdateOrder, token);
+            req.SetParametr("order_id",order.id);
+            req.SetParametr("status_id", status.id);
+            Parse<Error>(Connector.GetJsonAnswer(req));
+        }
     }
     public class Goods_id
     {

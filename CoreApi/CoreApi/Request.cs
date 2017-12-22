@@ -11,8 +11,10 @@ namespace CoreApi
         public const string comGetGoods = "getGoods";
         public const string comCreateGoods = "cGood"; 
         public const string comGetOrders = "getOrders";
+        public const string comGetStatuses = "getStatuses";
         public const string comRemoveGoods = "deleteGood";
         public const string comCreateOrder = "cOrder";
+        public const string comUpdateOrder = "updateOrder";
 
         private Dictionary<string, string> parametrs;
         private string comand;

@@ -50,7 +50,12 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Style="{StaticResource TextStyle}" Text="Статус: "/>
-                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding status}"/>
+                                <ComboBox x:Name="cmbOrderStatus"/>
+                                <!--<TextBlock Style="{StaticResource TextStyle}" Text="{Binding status}"/>-->
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Style="{StaticResource TextStyle}" Text="Клиент: "/>
+                                <TextBlock Style="{StaticResource TextStyle}" Text="{Binding customer}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Style="{StaticResource TextStyle}" Text="Стоимось: "/>
@@ -64,7 +69,10 @@
                                     <DataGridTextColumn Header="Стоимость" Binding="{Binding Path=TotalPrice}" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Width="100" Height="30" Content="Создать заказ" Click="CreateOrder_View" HorizontalAlignment="Left" Margin="0,15,0,0"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Width="100" Height="30" Content="Создать заказ" Click="CreateOrder_View" HorizontalAlignment="Left" Margin="0,15,0,0"/>
+                                <Button Width="100" Height="30" Content="Обновить" Click="UpdateOrder" HorizontalAlignment="Left" Margin="10,15,0,0"/>
+                        </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

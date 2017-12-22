@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CoreApi
 {
-    public class OrderStatus
+    public class Status
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -12,5 +10,11 @@ namespace CoreApi
         {
             return name;
         }
+    }
+
+    public class StatusCollection
+    {
+        public int count { get; set; }
+        public List<Status> statuses { get; set; }
     }
 }

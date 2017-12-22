@@ -29,6 +29,7 @@ namespace DesktopClient
         private GroupCustomers customers;
         private OrdersCollection orders;
         private OrderModel curCreatedOrder;
+        private StatusCollection statuses;
 
         public WorkWondow(Session session)
         {
@@ -41,6 +42,8 @@ namespace DesktopClient
         {
             cgSelectPhoto.ItemsSource = (new AlbumPhoto(curentSession.GetAllItems<Album>(Request.comGetPhotos), curentSession.token)).Photos;
             cgSelectPhoto.SelectedIndex = 0;
+            statuses = curentSession.GetAllItems<StatusCollection>(Request.comGetStatuses);
+            cmbOrderStatus.ItemsSource = statuses.statuses;
             Update_Goods();
             Update_Customers();
             Update_Orders();
@@ -57,6 +60,7 @@ namespace DesktopClient
         private void ClickOnOrder(object sender, MouseButtonEventArgs e)
         {
             grOrderInfo.DataContext = (sender as Border).DataContext;
+            cmbOrderStatus.SelectedIndex = (grOrderInfo.DataContext as Order).status.id - 1;
         }
 
         private void CreateItem_SelectPhoto(object sender, RoutedEventArgs e)
@@ -114,6 +118,7 @@ namespace DesktopClient
             orders = curentSession.GetAllItems<OrdersCollection>(Request.comGetOrders);
             icOrders.ItemsSource = orders.orders;
             grOrderInfo.DataContext = null;
+            cmbOrderStatus.SelectedIndex = -1;
         }
         private void AllOrders_View(object sender, RoutedEventArgs e)
         {
@@ -174,6 +179,22 @@ namespace DesktopClient
                 else
                     txtErrorCreateOrder.Text = "Ошибка при создании";
             }
+        }
+        private void UpdateOrder(object sender, RoutedEventArgs e)
+        {
+            var order = grOrderInfo.DataContext as Order;
+            if (order is null) return;
+            var status = cmbOrderStatus.SelectedItem as Status;
+            try
+            {
+                curentSession.UpdateOrder(order,status);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неправильный статус");
+            }
+            Update_Orders();
         }
         //private void Cmb_KeyUp(object sender, KeyEventArgs e)
         //{
